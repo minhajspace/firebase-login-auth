@@ -51,7 +51,7 @@ class  Login extends React.Component {
             <div>
 
            
-            <div>
+            <div className="m-2">
                 <span>
                     Email
                 </span>
