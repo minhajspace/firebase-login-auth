@@ -1,7 +1,7 @@
 import firebase from 'firebase';
     // Your web app's Firebase configuration
   var firebaseConfig = {
-        apiKey: "AIzaSyBUHCddrMDPI07gVK325wtqXwFXONGw0c0",
+    apiKey: "AIzaSyBUHCddrMDPI07gVK325wtqXwFXONGw0c0",
     authDomain: "login-70448.firebaseapp.com",
     projectId: "login-70448",
     storageBucket: "login-70448.appspot.com",
