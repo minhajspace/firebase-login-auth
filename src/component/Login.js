@@ -1,53 +1,67 @@
-import React,{useState,useEffect} from 'react'
+import React from 'react'
 import fire from '../firebase';
+import Singup from './Singup';
 
-const Login = () => {
-    const [email,setEmail] =useState()
-    const [password,setPassword] =useState()
-    console.log(email,password)
+class  Login extends React.Component {
+   state =  {
+       email:'',
+       password:'',
+       userId:''
+   }
+ 
+      handleAuth = ()=>{
+          console.log(`run`)
+          const { } =this.state;
+          fire.auth().onAuthStateChanged((user)=>{
+             if(this.state.userId){
+              this.setState({userId:user})
+             }else {
+                 this.setState({userId:null})
+             }
+          })
+      }
 
-    const  checkLogin = ()=>{
+      componentDidMount(){
+          this.handleAuth()
+      }
+    
+ 
+     
 
-        fire.auth().onAuthStateChanged=(email,password)=>{
-            if(email && password){
-                setEmail(email)
-                setPassword(password)
-            } else{
-                setEmail(null)
-                setPassword(null)
-            }
-        }
-    }
-    useEffect(()=>{
-        checkLogin()
-    })
-
-    const userLogin = (e)=>{
-        fire.auth().signInWithEmailAndPassword(email,password).then((user)=>{
-          console.log(`${user} are you loged in now`)
-        }).catch((err)=>{
-           console.log(err)
+    
+     userLogin = (e) => {
+         e.preventDefault()
+        console.log(this.state.email, this.state.password)
+        fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((res) => {
+            console.log(res.user.uid)
+            this.setState({userId:res.user.uid})
+        }).catch((err) => {
+            console.log(err)
         })
     }
-
+   
+   
+    
+    render(){
     return (
-            <form>
         <div>
 
-            
+        
+       {this.state.userId  !== "" && <form>
             <div>
 
+           
+            <div>
                 <span>
                     Email
                 </span>
-                <spna>
+                <span>
                     <input
                         placeholder="Email"
-                        onChange={(e)=>setEmail(e.target.value)}
-                        value={email}
-                 />
-
-                </spna>
+                        onChange={(e)=>this.setState({email:e.target.value})}
+                        value={this.state.email}
+                         />
+                </span>
             </div>
             <div>
                 <span>
@@ -57,16 +71,18 @@ const Login = () => {
                     <input
                     type="password"
                     placeholder="Enter your password"
-                    value={password}
-                    onChange={(e)=>{setPassword(e.target.value)}}
-
+                    value={this.state.password}
+                    onChange={(e)=>{this.setState({password:e.target.value})}}
                     />
                 </span>
             </div>
-            <div><span><button>Login</button></span></div>
+                <div><span><button onClick={this.userLogin}>Login</button></span></div>
+        
+            </div>
+        </form> }
+      { this.state.userId === "" && <Singup/>}
         </div>
-         </form>
     )
 }
-
+}
 export default Login
