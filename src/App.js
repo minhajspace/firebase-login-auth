@@ -10,11 +10,12 @@ import CreateAccount from './component/CreateAccount'
 const App = () => {
   return (
     <div>
-     {/* <Login/> */}
-    
-     {/* <SignIn/> */}
-     <CreateAccount/>
-    
+      {/* <Login /> */}
+
+      {/* <SignIn /> */}
+      <CreateAccount />
+      {/* <Home />  */}
+
     </div>
   )
 }
